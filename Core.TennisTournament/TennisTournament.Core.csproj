@@ -7,8 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TennisTournament.Exceptions\TennisTournament.Exceptions.csproj" />
     <ProjectReference Include="..\TennisTournament.Model\TennisTournament.Model.csproj" />
     <ProjectReference Include="..\TennisTournament.Repository\TennisTournament.Repository.csproj" />
+    <ProjectReference Include="..\TennisTournament.Utils\TennisTournament.Utils.csproj" />
   </ItemGroup>
 
 </Project>

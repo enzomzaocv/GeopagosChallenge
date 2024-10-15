@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TennisTournament.DataBaseContext\TennisTournament.DataBaseContext.csproj" />
     <ProjectReference Include="..\TennisTournament.Model\TennisTournament.Model.csproj" />
   </ItemGroup>
 

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Cryptography;
+using TennisTournament.Exceptions;
 using TennisTournament.Model.Dtos;
 using TennisTournament.Model.Entities;
 using TennisTournament.Repository;
+using TennisTournament.Utils;
 
 namespace TennisTournament.Core
 {
@@ -14,92 +12,142 @@ namespace TennisTournament.Core
 		private readonly ITournamentRepository tennisTournamentRepository;
 		private readonly IPlayerRepository playerRepository;
 
-		public TournamentCore(ITournamentRepository tennisTournamentRepository)
+		public TournamentCore(ITournamentRepository tennisTournamentRepository, IPlayerRepository playerRepository)
 		{
 			this.tennisTournamentRepository = tennisTournamentRepository;
+			this.playerRepository = playerRepository;
 		}
 
+		/// <summary>
+		/// Plays a tournament.
+		/// </summary>
+		/// <param name="request">
+		///		<para>A list of players.</para>
+		///	</param>
+		/// <returns>A <see cref="DtoPlayTournamentResponse"/> with the winner.</returns>
 		public async Task<DtoPlayTournamentResponse> PlayTournamentAsync(DtoPlayTournamentRequest request)
 		{
-			if (request.Players.Count % 2 != 0) return null;
-			if (request.Players.Count < 2) return null;
+			if (request.Players.Count % 2 != 0) throw new OddPlayersException();
+			if (request.Players.Count < 2) throw new NotEnoughPlayersException();
 
 			var tournament = await GenerateTournamentAsync(request);
 
+			await tennisTournamentRepository.CreateAsync(tournament);
+			await tennisTournamentRepository.SaveChangesAsync();
+
 			return new DtoPlayTournamentResponse
 			{
-				Winner =  tournament.Winner.Name
+				Winner = tournament.Winner.Name
 			};
 		}
 
+		/// <summary>
+		/// Search Tournaments.
+		/// </summary>
+		/// <param name="request">
+		///		<para>Parameters to search for.</para>
+		///	</param>
+		/// <returns>A list of tournaments.</returns>
+		public async Task<DtoSearchTournamentResponse> SearchTournamentAsync(DtoSearchTournamentRequest request)
+		{
+			request ??= new DtoSearchTournamentRequest();
+
+			var (count, tournaments) = await tennisTournamentRepository.SearchTournamentAsync(request);
+
+			return new DtoSearchTournamentResponse
+			{
+				List = tournaments,
+				Count = count
+			};
+		}
+
+		#region Private Methods
+
 		private async Task<Tournament> GenerateTournamentAsync(DtoPlayTournamentRequest request)
 		{
-			var tournament = new Tournament();
-			var peers = ChunkBy(request.Players, 2);
-
-			foreach (var peer in peers)
+			var tournament = new Tournament
 			{
-				var match = new Match
-				{
-					IdPlayer1 = peer[0].IdPlayer,
-					IdPlayer2 = peer[1].IdPlayer,
-					IdWinner = PlayMatchAsync(peer[0], peer[1])
-				};
+				Gender = request.GenderValue,
+				Date = request.DateValue
+			};
 
-				tournament.Matches.Add(match);
-			}
+			var players = await playerRepository.GetByIdentificationNumberAsync(request.Players, request.GenderValue);
 
-			if (peers.Count > 1) PlayStage(request);
+			if (players.Count < 2) throw new NotEnoughPlayersException();
+
+			await PlayStage(players, tournament);
 
 			return tournament;
 		}
 
-		private void PlayStage(List<Player> players)
+		private static async Task PlayStage(List<Player> players, Tournament tournament, int stage = 1)
 		{
-			var peers = ChunkBy(players, 2);
+			//var peers = ChunkBy(players, 2);
+			var peers = ListUtils.ChunkBy(players, 2);
 
 			foreach (var peer in peers)
 			{
+				var winner = PlayMatchAsync(peer[0], peer[1]);
+
 				var match = new Match
 				{
 					IdPlayer1 = peer[0].IdPlayer,
 					IdPlayer2 = peer[1].IdPlayer,
-					IdWinner = PlayMatchAsync(peer[0], peer[1])
+					IdWinner = winner.IdPlayer
 				};
 
 				tournament.Matches.Add(match);
-			}
 
-			if (peers.Count > 1) PlayStage();
-
-			return PlayStage();
-		}
-
-		private async long PlayMatchAsync(Player player1, Player player2, char gender = 'M')
-		{
-			if (gender == 'M')
-			{
-				var (luck1, luck2) = GetLuckNumbers();
-				var player1TotalPoints = await playerRepository.CalculateTotalPointsAsync(player1.IdPlayer) + luck1;
-				var player2TotalPoints = await playerRepository.CalculateTotalPointsAsync(player2.IdPlayer) + luck2;
-
-				if (player1TotalPoints == player2TotalPoints)
+				if (peers.Count == 1)
 				{
-					return (luck1 > luck2) ? player1.IdPlayer : player2.IdPlayer;
+					tournament.IdWinner = winner.IdPlayer;
+					tournament.Winner = winner;
 				}
-
-				return player1TotalPoints > player2TotalPoints 
-					? player1.IdPlayer 
-					: player2.IdPlayer;
 			}
+
+			if (peers.Count > 1) await PlayStage(tournament.Matches.Select(p => p.Winner).ToList(), tournament, stage++);
+
+			return;
 		}
 
-		private (int luck1, int luck2) GetLuckNumbers()
+		private static Player PlayMatchAsync(Player player1, Player player2)
 		{
-			return (1, 2);
+			var (luck1, luck2) = GetLuckNumbers();
+			var player1TotalPoints = player1.CalculateTotalPoints() + luck1;
+			var player2TotalPoints = player2.CalculateTotalPoints() + luck2;
+
+			if (player1TotalPoints == player2TotalPoints)
+			{
+				return (luck1 > luck2) ? player1 : player2;
+			}
+
+			return player1TotalPoints > player2TotalPoints
+				? player1
+				: player2;
 		}
 
-		public static List<List<T>> ChunkBy<T>(this List<T> source, int chunkSize)
+		private static (int luck1, int luck2) GetLuckNumbers()
+		{
+			var luckNumber1 = GenerateRandomNumber(1);
+			var luckNumber2 = GenerateRandomNumber(1);
+
+			while (luckNumber1 == luckNumber2)
+			{
+				luckNumber2 = GenerateRandomNumber(1);
+			}
+
+			return (luckNumber1, luckNumber2);
+		}
+
+		private static int GenerateRandomNumber(int length)
+		{
+			var random = RandomNumberGenerator.Create();
+			var randomNumber = new byte[length];
+
+			return BitConverter.ToInt32(randomNumber, 0);
+		}
+
+		private static List<List<Player>> ChunkBy(List<Player> source, int chunkSize)
 		{
 			return source
 				.Select((x, i) => new { Index = i, Value = x })
@@ -108,9 +156,6 @@ namespace TennisTournament.Core
 				.ToList();
 		}
 
-		public async Task<DtoSearchTournamentResponse> SearchTournamentAsync(DtoSearchTournamentRequest request)
-		{
-
-		}
+		#endregion
 	}
 }

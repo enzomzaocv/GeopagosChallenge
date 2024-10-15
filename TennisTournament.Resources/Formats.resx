@@ -117,19 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidDate" xml:space="preserve">
-    <value>Invalid Date</value>
-  </data>
-  <data name="NotEnoughPlayers" xml:space="preserve">
-    <value>Not enough players</value>
-  </data>
-  <data name="OddPlayers" xml:space="preserve">
-    <value>Amount of players must be even.</value>
-  </data>
-  <data name="UnexpectedError" xml:space="preserve">
-    <value>Unexpected error</value>
-  </data>
-  <data name="InvalidFormat" xml:space="preserve">
-    <value>Invalid format on  {0}</value>
+  <data name="DateFormatDdMmYyyy" xml:space="preserve">
+    <value>dd-MM-yyyy</value>
   </data>
 </root>

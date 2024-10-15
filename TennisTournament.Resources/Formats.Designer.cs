@@ -22,14 +22,14 @@ namespace TennisTournament.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Messages {
+    public class Formats {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Messages() {
+        internal Formats() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace TennisTournament.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TennisTournament.Resources.Messages", typeof(Messages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TennisTournament.Resources.Formats", typeof(Formats).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,11 @@ namespace TennisTournament.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid Date.
+        ///   Looks up a localized string similar to dd-MM-yyyy.
         /// </summary>
-        public static string InvalidDate {
+        public static string DateFormatDdMmYyyy {
             get {
-                return ResourceManager.GetString("InvalidDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid format on  {0}.
-        /// </summary>
-        public static string InvalidFormat {
-            get {
-                return ResourceManager.GetString("InvalidFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not enough players.
-        /// </summary>
-        public static string NotEnoughPlayers {
-            get {
-                return ResourceManager.GetString("NotEnoughPlayers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Amount of players must be even..
-        /// </summary>
-        public static string OddPlayers {
-            get {
-                return ResourceManager.GetString("OddPlayers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unexpected error.
-        /// </summary>
-        public static string UnexpectedError {
-            get {
-                return ResourceManager.GetString("UnexpectedError", resourceCulture);
+                return ResourceManager.GetString("DateFormatDdMmYyyy", resourceCulture);
             }
         }
     }

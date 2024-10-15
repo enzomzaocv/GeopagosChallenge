@@ -1,12 +1,12 @@
-using System.Runtime.CompilerServices;
 using TennisTournament.Core;
+using TennisTournament.DataBaseContext;
 using TennisTournament.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-
+builder.Services.AddDbContext<TennisTournamentDbContext>();
+builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
 builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
 builder.Services.AddScoped<ITournamentCore, TournamentCore>();
 builder.Services.AddControllers();
@@ -22,6 +22,8 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler("/error");
 
 app.UseHttpsRedirection();
 

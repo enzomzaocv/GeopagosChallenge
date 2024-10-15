@@ -7,10 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Enumerations\TennisTournament.Enumerations.csproj" />
-    <ProjectReference Include="..\TennisTournament.Exceptions\TennisTournament.Exceptions.csproj" />
     <ProjectReference Include="..\TennisTournament.Resources\TennisTournament.Resources.csproj" />
-    <ProjectReference Include="..\TennisTournament.Utils\TennisTournament.Utils.csproj" />
   </ItemGroup>
 
 </Project>

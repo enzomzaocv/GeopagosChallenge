@@ -8,14 +8,15 @@ namespace TennisTournament.Model.Entities
 		[Key]
 		public long IdTournament { get; set; }
 
-		public int Year { get; set; }
-		public long? IdWinner { get; set; }
+		public string Name { get; set; }
+		public DateTime Date { get; set; }
+		public long IdWinner { get; set; }
+		public int Gender { get; set; }
 
 
 		[ForeignKey(nameof(IdWinner))]
 		public Player Winner { get; set; }
 
-		[ForeignKey(nameof(Match.IdMatch))]
-		public List <Match> Matches { get; set; } = new List<Match>();
+		public List<Match> Matches { get; set; } = new List<Match>();
 	}
 }
