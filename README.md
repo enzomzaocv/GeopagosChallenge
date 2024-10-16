@@ -1,6 +1,8 @@
+Para correr el proyecto
+*Primero correr los scripts en la base de datos para crear las tablas (en carperta data base scripts).
+*Cambiar connection string en appsettings.json.
+
 # GeopagosChallenge
-
-
 La modalidad del torneo es por eliminación directa.*
 Puede asumir por simplicidad que la cantidad de jugadores es potencia de 2.
 El torneo puede ser Femenino o Masculino.
