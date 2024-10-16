@@ -2,8 +2,8 @@
 
 namespace TennisTournament.Repository
 {
-	public interface IPlayerRepository
+	public interface IPlayerRepository : IRepository<Player>
 	{
-		Task<List<Player>> GetByIdentificationNumberAsync(List<long> players, int gender);
+		Task<List<Player>> GetByNameAsync(List<string> players, int gender);
 	}
 }

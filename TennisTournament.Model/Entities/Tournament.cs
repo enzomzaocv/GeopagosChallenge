@@ -8,7 +8,6 @@ namespace TennisTournament.Model.Entities
 		[Key]
 		public long IdTournament { get; set; }
 
-		public string Name { get; set; }
 		public DateTime Date { get; set; }
 		public long IdWinner { get; set; }
 		public int Gender { get; set; }

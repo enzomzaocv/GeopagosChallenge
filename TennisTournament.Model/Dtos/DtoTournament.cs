@@ -5,8 +5,9 @@ namespace TennisTournament.Model.Dtos
 {
 	public class DtoTournament
 	{
-		public string Name { get; set; }
 		public string Winner { get; set; }
+
+		[JsonIgnore]
 		public DateTime Date { get; set; }
 
 		[JsonPropertyName("date")]

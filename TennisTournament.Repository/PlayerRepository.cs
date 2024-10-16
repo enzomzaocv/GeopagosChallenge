@@ -20,10 +20,10 @@ namespace TennisTournament.Repository
 		///		<para>An players identification numbers list.</para>
 		///	</param>
 		/// <returns>A <see cref="Player"/> list.</returns>
-		public async Task<List<Player>> GetByIdentificationNumberAsync(List<long> players, int gender)
+		public async Task<List<Player>> GetByNameAsync(List<string> players, int gender)
 		{
 			return await _context.Player
-				.Where(p => players.Contains(p.IdentificationNumber) && p.Gender == gender)
+				.Where(p => players.Contains(p.Name) && p.Gender == gender)
 				.Include(p => p.Skills).ThenInclude(q => q.SkillType)
 				.ToListAsync();
 		}

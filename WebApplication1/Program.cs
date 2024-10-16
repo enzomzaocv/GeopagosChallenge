@@ -8,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TennisTournamentDbContext>();
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
 builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
+builder.Services.AddScoped<ISkillTypeRepository, SkillTypeRepository>();
+builder.Services.AddScoped<ISkillTypeCore, SkillTypeCore>();
 builder.Services.AddScoped<ITournamentCore, TournamentCore>();
+builder.Services.AddScoped<IPlayerCore, PlayerCore>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

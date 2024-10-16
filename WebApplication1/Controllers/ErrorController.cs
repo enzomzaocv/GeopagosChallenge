@@ -13,7 +13,7 @@ namespace TennisTournament.Controllers
 		/// </summary>
 		/// <returns>The error detail.</returns>
 		[AllowAnonymous, ApiExplorerSettings(IgnoreApi = true), HttpGet, HttpPost, HttpPut, HttpDelete, Route("/error")]
-		public async Task<IActionResult> Error()
+		public IActionResult Error()
 		{
 			var context = HttpContext.Features.Get<IExceptionHandlerFeature>();
 
@@ -35,6 +35,8 @@ namespace TennisTournament.Controllers
 
 			switch (ex)
 			{
+				case InvalidSkillException _:
+				case InvalidFormatException _:
 				case NotEnoughPlayersException _:
 				case OddPlayersException _:
 					errorCode = StatusCodes.Status400BadRequest;

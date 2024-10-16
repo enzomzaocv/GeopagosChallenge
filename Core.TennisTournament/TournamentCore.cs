@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using TennisTournament.Exceptions;
+﻿using TennisTournament.Exceptions;
 using TennisTournament.Model.Dtos;
 using TennisTournament.Model.Entities;
 using TennisTournament.Repository;
@@ -71,7 +70,7 @@ namespace TennisTournament.Core
 				Date = request.DateValue
 			};
 
-			var players = await playerRepository.GetByIdentificationNumberAsync(request.Players, request.GenderValue);
+			var players = await playerRepository.GetByNameAsync(request.Players, request.GenderValue);
 
 			if (players.Count < 2) throw new NotEnoughPlayersException();
 
@@ -93,7 +92,8 @@ namespace TennisTournament.Core
 				{
 					IdPlayer1 = peer[0].IdPlayer,
 					IdPlayer2 = peer[1].IdPlayer,
-					IdWinner = winner.IdPlayer
+					IdWinner = winner.IdPlayer,
+					Stage = stage
 				};
 
 				tournament.Matches.Add(match);
@@ -141,10 +141,9 @@ namespace TennisTournament.Core
 
 		private static int GenerateRandomNumber(int length)
 		{
-			var random = RandomNumberGenerator.Create();
-			var randomNumber = new byte[length];
+			Random rand = new Random();
 
-			return BitConverter.ToInt32(randomNumber, 0);
+			return rand.Next(1, 10);
 		}
 
 		private static List<List<Player>> ChunkBy(List<Player> source, int chunkSize)

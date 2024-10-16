@@ -132,4 +132,7 @@
   <data name="InvalidFormat" xml:space="preserve">
     <value>Invalid format on  {0}</value>
   </data>
+  <data name="InvalidSkill" xml:space="preserve">
+    <value>Id Skill was not found on the database</value>
+  </data>
 </root>

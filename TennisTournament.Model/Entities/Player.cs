@@ -9,7 +9,6 @@ namespace TennisTournament.Model.Entities
 		public int SkillPoints { get; set; }
 		public int Gender { get; set; }
 		public string Name { get; set; }
-		public long IdentificationNumber { get; set; }
 
 		public List<Skill> Skills { get; set; } = new List<Skill>();
 

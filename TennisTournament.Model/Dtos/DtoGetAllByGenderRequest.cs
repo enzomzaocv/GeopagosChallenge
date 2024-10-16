@@ -1,6 +1,6 @@
 ﻿namespace TennisTournament.Model.Dtos
 {
-	public class DtoGetAllByGenderRequest
+	public class DtoGetAllByGenderRequest : Gendered
 	{
 	}
 }

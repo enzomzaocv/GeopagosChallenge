@@ -79,6 +79,15 @@ namespace TennisTournament.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Id Skill was not found on the database.
+        /// </summary>
+        public static string InvalidSkill {
+            get {
+                return ResourceManager.GetString("InvalidSkill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not enough players.
         /// </summary>
         public static string NotEnoughPlayers {

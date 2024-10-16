@@ -23,6 +23,7 @@ namespace TennisTournament.DataBaseContext
 		public DbSet<Match> Match { get; set; }
 		public DbSet<Player> Player { get; set; }
 		public DbSet<Skill> Skill { get; set; }
+		public DbSet<SkillType> SkillType { get; set; }
 		public DbSet<Tournament> Tournament { get; set; }
 	}
 }

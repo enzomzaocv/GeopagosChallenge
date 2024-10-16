@@ -34,7 +34,7 @@ namespace WebApplication1.Controllers
 		{
 			var result = await tournamentCore.SearchTournamentAsync(request);
 
-			return Ok();
+			return Ok(result);
 		}
 	}
 }

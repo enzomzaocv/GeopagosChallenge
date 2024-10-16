@@ -26,7 +26,7 @@ namespace TennisTournament.Repository
 			var query = _context.Tournament
 				.Where(p =>
 					(string.IsNullOrWhiteSpace(request.Winner) || p.Winner.Name == request.Winner)
-					&& (request.Gender == null || p.Gender == request.Gender)
+					&& (!request.GenderValue.HasValue || p.Gender == request.GenderValue.Value)
 					&& (!request.DateValue.HasValue || p.Date.Date == request.DateValue.Value.Date));
 
 			var count = await query.CountAsync();
@@ -34,7 +34,6 @@ namespace TennisTournament.Repository
 			var tournaments = await query
 				.Select(p => new DtoTournament
 				{
-					Name = p.Name,
 					Winner = p.Winner.Name,
 					Date = p.Date
 				})

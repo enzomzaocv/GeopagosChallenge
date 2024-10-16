@@ -1,4 +1,6 @@
-﻿using TennisTournament.DataBaseContext;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using TennisTournament.DataBaseContext;
 
 namespace TennisTournament.Repository
 {
@@ -30,6 +32,18 @@ namespace TennisTournament.Repository
 		public async Task SaveChangesAsync()
 		{
 			await _context.SaveChangesAsync();
+		}
+
+		/// <summary>
+		/// Gets all record from the database.
+		/// </summary>
+		/// <returns>An entity list.</returns>
+		public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
+		{
+			return await _context.Set<T>()
+				.Where(predicate)
+				.AsNoTracking()
+				.ToListAsync();
 		}
 	}
 }

@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core.TennisTournament\TennisTournament.Core.csproj" />
+    <ProjectReference Include="..\TennisTournament.Exceptions\TennisTournament.Exceptions.csproj" />
+    <ProjectReference Include="..\TennisTournament.Resources\TennisTournament.Resources.csproj" />
   </ItemGroup>
 
 </Project>
