@@ -18,6 +18,13 @@ namespace TennisTournament.Core
 			_skillTypeRepository = skillTypeRepository;
 		}
 
+		/// <summary>
+		///	Creates a player.
+		/// </summary>
+		/// <param name="request">
+		///		<para>Player data.</para>
+		///	</param>
+		/// <returns>A <see cref="Task"/>.</returns>
 		public async Task CreateAsync(DtoCreatePlayerRequest request)
 		{
 			if (await _skillTypeRepository.CheckIdsAsync(request.Skills.Select(p => p.IdSkill).ToList()))
@@ -39,6 +46,13 @@ namespace TennisTournament.Core
 			await _playerRepository.SaveChangesAsync();
 		}
 
+		/// <summary>
+		/// Gets a list of players.
+		/// </summary>
+		/// <param name="request">
+		///		<para>Gender option.</para>
+		///	</param>
+		/// <returns>A list of players.</returns>
 		public async Task<DtoGetAllByGenderResponse> GetAllByGenderAsync(DtoGetAllByGenderRequest request)
 		{
 			var players = await _playerRepository.GetAllAsync(p => p.Gender == request.GenderValue);

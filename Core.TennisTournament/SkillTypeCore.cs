@@ -12,6 +12,10 @@ namespace TennisTournament.Core
 			_skillTypeRepository = skillTypeRepository;
 		}
 
+		/// <summary>
+		/// Gets all skills.
+		/// </summary>
+		/// <returns>A skills list</returns>
 		public async Task<GetSkillTypeResponse> GetAllAsync()
 		{
 			var skills = await _skillTypeRepository.GetAllAsync();
