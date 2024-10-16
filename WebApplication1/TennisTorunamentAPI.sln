@@ -20,8 +20,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TennisTournament.Exceptions", "..\TennisTournament.Exceptions\TennisTournament.Exceptions.csproj", "{D2AAFF6D-6F78-49C4-8B86-03FA52792AE0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Base Scripts", "Data Base Scripts", "{56497E55-214D-4FF0-872E-8557497E45F1}"
+	ProjectSection(SolutionItems) = preProject
+		..\Data Base Scripts\Scripts.sql = ..\Data Base Scripts\Scripts.sql
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TennisTournament.Utils", "..\TennisTournament.Utils\TennisTournament.Utils.csproj", "{638EF2F0-E940-4EBB-AB88-07E74C578895}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TennisTournament.Utils", "..\TennisTournament.Utils\TennisTournament.Utils.csproj", "{638EF2F0-E940-4EBB-AB88-07E74C578895}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
